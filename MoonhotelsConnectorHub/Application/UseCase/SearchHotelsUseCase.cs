@@ -18,10 +18,17 @@ namespace MoonhotelsConnectorHub.Application.UseCase
 
         public async Task<HubSearchResponse> PerformSearchAsync(HubSearchRequest request)
         {
-            var searchTasks = _providerConnectors.Select(connector => connector.SearchAsync(request));
-            var responses = await Task.WhenAll(searchTasks);
+            try { 
+                var searchTasks = _providerConnectors.Select(connector => connector.SearchAsync(request));
+                var responses = await Task.WhenAll(searchTasks);
+                var validResponses = responses.Where(response => response != null).ToList();
 
-            return _aggregator.AggregateResponses(responses);
+                return _aggregator.AggregateResponses(validResponses);
+            } catch (Exception ex)
+            {
+                throw new Exception($"Error while searching hotels: {ex.Message}");
+            }
+            
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace MoonhotelsConnectorHub.Infrastructure.HotelLegs.Dto
+﻿namespace MoonhotelsConnectorHub.Infrastructure.Dto.HotelLegs
 {
     public class HotelLegsSearchResponse
     {
